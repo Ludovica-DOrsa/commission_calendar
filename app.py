@@ -8,6 +8,8 @@ from geopy.geocoders import Nominatim
 import docx
 import io
 
+st.set_page_config(layout="wide")
+
 today = date.today()
 one_week = today + timedelta(days=6)
 
@@ -32,7 +34,8 @@ if len(df) > 0:
     df['Commissioner'] = df['Commissioner'].fillna('None')
 
     gb = GridOptionsBuilder.from_dataframe(df)
-    # gb.configure_pagination()
+    gb.configure_pagination()
+    gb.configure_side_bar()
     gb.configure_selection('multiple', use_checkbox=True, groupSelectsChildren=True)
     gridOptions = gb.build()
     grid_response = AgGrid(
@@ -42,6 +45,7 @@ if len(df) > 0:
         fit_columns=True,
         height=500,
         update_mode=GridUpdateMode.MODEL_CHANGED
+
     )
 
     selected = grid_response['selected_rows']
